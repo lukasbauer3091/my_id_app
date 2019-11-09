@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "171720756335",
+    "firebase_url": "https://my-id-258513.firebaseio.com",
+    "project_id": "my-id-258513",
+    "storage_bucket": "my-id-258513.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:171720756335:android:d2c2fdf8fa1fc68d77519a",
+        "android_client_info": {
+          "package_name": "ca.lukasbauer.my_id"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "171720756335-io9uk5bj3a4i2ed22p4u7s1m98dlmkoj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCUmuwHs9f4zCar1c3kxo8nK6WILawj6g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "171720756335-io9uk5bj3a4i2ed22p4u7s1m98dlmkoj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
