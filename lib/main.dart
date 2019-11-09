@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:camera/camera.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() {
   // debugPaintSizeEnabled = true;
