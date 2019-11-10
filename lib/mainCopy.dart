@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
-import 'dart:convert';
+import 'dart:convert' as convert;
 import 'package:camera/camera.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:http/http.dart' as http;
+
 
 void main() {
   // debugPaintSizeEnabled = true;
@@ -20,6 +22,7 @@ class FavoriteWidget extends StatefulWidget {
   @override
   _FavoriteWidgetState createState() => _FavoriteWidgetState();
 }
+
 
 class _FavoriteWidgetState extends State<FavoriteWidget> {
   bool _isFavorited = true;
@@ -52,6 +55,7 @@ class _FavoriteWidgetState extends State<FavoriteWidget> {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
     Widget titleSection = Container(
       padding: const EdgeInsets.all(32),
       child: Row(
@@ -157,6 +161,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+
 Future<Null> _showAddUserDialogBox(BuildContext context) {
   TextEditingController _nameTextController = new TextEditingController();
   TextEditingController _emailTextController = new TextEditingController();
@@ -177,7 +182,7 @@ Future<Null> _showAddUserDialogBox(BuildContext context) {
                 ),
                 new TextField(
                   controller: _emailTextController,
-                  decoration: const InputDecoration(labelText: "Email: "),
+                  decoration: const InputDecoration(labelText: "License #: "),
                 ),
 
               ],
@@ -193,12 +198,34 @@ Future<Null> _showAddUserDialogBox(BuildContext context) {
             ),
             // This button results in adding the contact to the database
             new FlatButton(
-                onPressed: () {
-                  callable.call(<String, dynamic>{
-                    "name": _nameTextController.text,
-                    "email": _emailTextController.text
+                onPressed: () async {
+                  String theName = _nameTextController.text;
+                  //int counterpls = 0;
+                  //if (Firestore.instance.collection('users').where('name', isEqualTo: theName).snapshots().listen((data) => data.documents.forEach((doc) => print(doc["name"]))) != null){
+                  //  print("ASASDAS");
+                  //}
+
+                 // Firestore.instance.document('users/name').get().then((theName) {
+                 //   theName.exists ? print("its there fam") : print(
+                 //       "NEW"); //exists : //not exist ;
+                 // });
+
+                  var value = await aName(theName);
+
+                  if (value == true){
+                    print("The entry already exists. Skipping and not adding.");
                   }
-                  );
+                  else{
+                      callable.call(<String, dynamic>{
+                      "name": theName,
+                      "email": _emailTextController.text
+                    }
+                    );
+                  }
+
+
+
+
 
 
                   Navigator.of(context).pop();
@@ -213,3 +240,28 @@ Future<Null> _showAddUserDialogBox(BuildContext context) {
 
   );
 }
+
+Future<bool> doesNameAlreadyExist(String name) async {
+  final QuerySnapshot result = await Firestore.instance
+      .collection('users')
+      .where('name', isEqualTo: name)
+      .limit(1)
+      .getDocuments();
+  final List<DocumentSnapshot> documents = result.documents;
+  return documents.length == 1;
+}
+
+Future<bool> aName(String name) async {
+  QuerySnapshot querySnapshot = await Firestore.instance.collection('users')
+      .where('name', isEqualTo: name)
+      .getDocuments();
+  var list = querySnapshot.documents;
+  if(list.length == 0){
+    return false;
+  }
+  else{
+    return true;
+  }
+}
+
+
