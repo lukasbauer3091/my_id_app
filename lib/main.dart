@@ -29,14 +29,14 @@ class _FavoriteWidgetState extends State<FavoriteWidget> {
           padding: EdgeInsets.all(0),
           child: IconButton(
             icon: (Icon(Icons.camera)),
-            onPressed: () {
-              return TakePictureScreenState();
-            },
+            onPressed: () => TakePictureScreen()),
+
 
           ),
-        ),
-      ],
-    );
+          ],
+        );
+
+
   }
 }
 

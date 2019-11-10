@@ -20,7 +20,9 @@ dependencies:
   flutter:
     sdk: flutter
   camera:
+  image_picker: ^0.5.4
   cloud_firestore:
+  global_configuration: ^1.4.0
   cloud_functions:
   firebase_database:
   http:
